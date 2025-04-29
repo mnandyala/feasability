@@ -2,8 +2,8 @@ name: Create TaxRelease Branch
 
 on:
   schedule:
-    # Schedule: Every Wednesday at 9:00 AM IST
-    - cron: '0 9 * * 3'
+    # Schedule: Every Wednesday at 9:00 AM IST (IST is UTC+5:30, so UTC time is 3:30 AM)
+    - cron: '30 3 * * 3'
 
 jobs:
   create-branch:
@@ -16,18 +16,20 @@ jobs:
       # Step 2: Set up Git
       - name: Set up Git
         run: |
-          git config --global user.mnandyala "github-actions[bot]"
-          git config --global user.nandyala.m.reddy.tpr@vialto.com "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "mnandyala"
+          git config --global user.email "nandyala.m.reddy.tpr@vialto.com"
 
       # Step 3: Create new branch
-      - name: TaxRelease
-        id: TaxRelease
-        run: TaxRelease
-          BRANCH_NAME="TaxRelease-$(date +%Y-%m-%d)"
-          git checkout main
-          git pull origin main
-          git checkout -b "$ada-engine"
-          echo "::set-output name=branch_name::$Bada-engine"
+      - name: Create TaxRelease Branch
+        id: create_branch
+        run: |
+          powershell -Command "
+          $BRANCH_NAME = 'TaxRelease-' + (Get-Date -Format yyyy-MM-dd);
+          git checkout main;
+          git pull origin main;
+          git checkout -b $BRANCH_NAME;
+          echo ::set-output name=branch_name::$BRANCH_NAME;
+          "
 
       # Step 4: Push the branch to the repository
       - name: Push new branch
