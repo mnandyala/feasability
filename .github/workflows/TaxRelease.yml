@@ -2,7 +2,7 @@ name: Create TaxRelease Branch
 
 on:
   schedule:
-    # Schedule: Every Wednesday at 9:00 AM UTC
+    # Schedule: Every Wednesday at 9:00 AM IST
     - cron: '0 9 * * 3'
 
 jobs:
